@@ -1,40 +1,50 @@
 package com.sanchez.cruddeusuarios.Usuarios;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuariosService {
     private final UsuariosRepository usuariosRepository;
+    private final UsuariosMapper usuariosMapper;
 
-    public UsuariosService (UsuariosRepository usuariosRepository){
+    public UsuariosService (UsuariosMapper usuariosMapper, UsuariosRepository usuariosRepository){
+        this.usuariosMapper = usuariosMapper;
         this.usuariosRepository = usuariosRepository;
     }
 
     //Criar usuário
-    public UsuariosModel criarUsuario(UsuariosModel usuarioNovo){
-        return usuariosRepository.save(usuarioNovo);
+    public UsuariosDTO criarUsuario(UsuariosDTO usuarioDTO){
+        UsuariosModel usuario = usuariosMapper.map(usuarioDTO);
+        usuario = usuariosRepository.save(usuario);
+        return usuariosMapper.map(usuario);
     }
 
     //Listar todos os usuários
-    public List<UsuariosModel> listarUsuarios(){
-        return usuariosRepository.findAll();
+    public List<UsuariosDTO> listarUsuarios(){
+        List<UsuariosModel> usuarios = usuariosRepository.findAll();
+        return usuarios.stream()
+                .map(usuariosMapper::map)
+                .collect(Collectors.toList());
     }
 
     //Listar usuário por ID
-    public UsuariosModel listarUsuarioPorId(Long id){
+    public UsuariosDTO listarUsuarioPorId(Long id){
         Optional<UsuariosModel> usuarioPorId = usuariosRepository.findById(id);
-        return usuarioPorId.orElse(null);
+        return usuarioPorId.map(usuariosMapper::map).orElse(null);
     }
 
     //Atualizar usuário
-    public UsuariosModel atualizarUsuario(Long id, UsuariosModel usuarioAtualizado){
-        if(usuariosRepository.existsById(id)){
+    public UsuariosDTO atualizarUsuario(Long id, UsuariosDTO usuarioDTO){
+        Optional<UsuariosModel> usuarioExistente = usuariosRepository.findById(id);
+        if(usuarioExistente.isPresent()){
+            UsuariosModel usuarioAtualizado = usuariosMapper.map(usuarioDTO);
             usuarioAtualizado.setId(id);
-            return usuariosRepository.save(usuarioAtualizado);
+            UsuariosModel usuarioSalvo = usuariosRepository.save(usuarioAtualizado);
+            return usuariosMapper.map(usuarioSalvo);
         }
         return null;
     }
