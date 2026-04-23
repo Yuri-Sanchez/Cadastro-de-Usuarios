@@ -1,0 +1,2 @@
+ALTER TABLE tb_usuarios
+ADD COLUMN cpf VARCHAR(14);
