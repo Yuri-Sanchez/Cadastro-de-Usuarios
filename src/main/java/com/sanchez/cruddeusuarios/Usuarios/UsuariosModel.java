@@ -24,4 +24,7 @@ public class UsuariosModel {
 
     @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
+    private String cpf;
 }
