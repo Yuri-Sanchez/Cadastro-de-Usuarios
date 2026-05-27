@@ -1,4 +1,4 @@
-package com.sanchez.cruddeusuarios.Usuarios;
+package com.sanchez.cruddeusuarios.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

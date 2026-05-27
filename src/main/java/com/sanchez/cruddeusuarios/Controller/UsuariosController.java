@@ -1,9 +1,10 @@
-package com.sanchez.cruddeusuarios.Usuarios;
+package com.sanchez.cruddeusuarios.Controller;
 
-import io.swagger.v3.oas.annotations.Operation;
+import com.sanchez.cruddeusuarios.DTO.UsuariosDTO;
+import com.sanchez.cruddeusuarios.Docs.UsuariosControllerDoc;
+import com.sanchez.cruddeusuarios.Service.UsuariosService;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuario")
-
-public class UsuariosController {
+@Tag(name="Cadastros", description = "Endpoints responsaveis por criar, listar, atualizar e deletar usuários")
+public class UsuariosController implements UsuariosControllerDoc {
     private final UsuariosService usuariosService;
 
     public UsuariosController(UsuariosService usuariosService){
@@ -22,11 +23,6 @@ public class UsuariosController {
 
     //CREATE - cadastrar
     @PostMapping("/criar")
-    @Operation(summary = "Cria um novo usuário" , description = "Rota cria um novo usuário e insere no banco de dados")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "201", description = "Usuário criada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro na criação do usuário")
-    })
     public ResponseEntity<String> cadastrarUsuario (@RequestBody UsuariosDTO usuario){
         UsuariosDTO usuarioNovo = usuariosService.criarUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -35,7 +31,6 @@ public class UsuariosController {
 
     //READ - listar
     @GetMapping("/listar")
-    @Operation(summary = "Lista todos os usuários", description = "Rota lista todos os usuários")
     public ResponseEntity<List<UsuariosDTO>> listarUsuarios(){
         List<UsuariosDTO> usuarios = usuariosService.listarUsuarios();
     return ResponseEntity.ok(usuarios);
@@ -43,11 +38,6 @@ public class UsuariosController {
 
     //READ - listar por ID
     @GetMapping("/listar/{id}")
-    @Operation(summary = "Lista o usuário por id", description = "Rota lista um novo usuário pelo seu id")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "201", description = "Usuário encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
-    })
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
         UsuariosDTO usuario = usuariosService.listarUsuarioPorId(id);
 
@@ -61,11 +51,6 @@ public class UsuariosController {
 
     //UPDATE - atualizar
     @PutMapping("/atualizar/{id}")
-    @Operation(summary = "Altera o usuário por id", description = "Rota altera um usuário pelo seu id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário alterado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado, não foi possível alterar")
-    })
     public ResponseEntity<?> atualizarUsuario(
             @Parameter(description = "Manda o id no caminho da requisição")
             @PathVariable Long id,

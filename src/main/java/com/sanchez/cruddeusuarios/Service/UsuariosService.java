@@ -1,5 +1,9 @@
-package com.sanchez.cruddeusuarios.Usuarios;
+package com.sanchez.cruddeusuarios.Service;
 
+import com.sanchez.cruddeusuarios.DTO.UsuariosDTO;
+import com.sanchez.cruddeusuarios.Mapper.UsuariosMapper;
+import com.sanchez.cruddeusuarios.Model.UsuariosModel;
+import com.sanchez.cruddeusuarios.Repository.UsuariosRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

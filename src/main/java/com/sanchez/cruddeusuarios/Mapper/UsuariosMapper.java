@@ -1,5 +1,7 @@
-package com.sanchez.cruddeusuarios.Usuarios;
+package com.sanchez.cruddeusuarios.Mapper;
 
+import com.sanchez.cruddeusuarios.DTO.UsuariosDTO;
+import com.sanchez.cruddeusuarios.Model.UsuariosModel;
 import org.springframework.stereotype.Component;
 
 @Component
