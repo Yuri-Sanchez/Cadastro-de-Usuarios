@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Segoe UI', Arial, sans-serif;
+            background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height:100vh;
+            padding:30px;
+        }
+
+        .container{
+            max-width:1300px;
+            margin:0 auto;
+        }
+
+        .card{
+            background:white;
+            border-radius:20px;
+            overflow:hidden;
+            box-shadow:0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .card-header{
+            background:linear-gradient(135deg, #2196F3, #1976D2);
+            color:white;
+            padding:30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .header-info h1{
+            font-size:32px;
+            margin-bottom:8px;
+        }
+
+        .header-info p{
+            font-size:15px;
+            opacity:0.9;
+        }
+
+        .btn-novo{
+            background:linear-gradient(135deg,#4CAF50,#45a049);
+            color:white;
+            padding:14px 22px;
+            border-radius:12px;
+            text-decoration:none;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn-novo:hover{
+            transform:translateY(-2px);
+            box-shadow:0 5px 20px rgba(76,175,80,0.4);
+        }
+
+        .table-container{
+            padding:30px;
+            overflow-x:auto;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            min-width:900px;
+        }
+
+        th{
+            background:#f4f6f9;
+            color:#333;
+            padding:18px;
+            text-align:center;
+            font-size:15px;
+            border-bottom:2px solid #e0e0e0;
+        }
+
+        td{
+            padding:18px;
+            text-align:center;
+            border-bottom:1px solid #eee;
+            transition:0.2s;
+        }
+
+        tr:hover{
+            background:#f9f9f9;
+        }
+
+        .acoes{
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            flex-wrap:wrap;
+        }
+
+        .btn{
+            padding:10px 16px;
+            border-radius:10px;
+            text-decoration:none;
+            color:white;
+            font-size:14px;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn:hover{
+            transform:translateY(-2px);
+        }
+
+        .btn-info{
+            background:linear-gradient(135deg,#00BCD4,#0097A7);
+        }
+
+        .btn-info:hover{
+            box-shadow:0 5px 20px rgba(0,188,212,0.4);
+        }
+
+        .btn-edit{
+            background:linear-gradient(135deg,#FF9800,#F57C00);
+        }
+
+        .btn-edit:hover{
+            box-shadow:0 5px 20px rgba(255,152,0,0.4);
+        }
+
+        .btn-delete{
+            background:linear-gradient(135deg,#f44336,#d32f2f);
+        }
+
+        .btn-delete:hover{
+            box-shadow:0 5px 20px rgba(244,67,54,0.4);
+        }
+
+        .sem-usuarios{
+            text-align:center;
+            padding:40px;
+            color:#666;
+            font-size:18px;
+        }
+
+        @media(max-width:900px){
+
+            .card-header{
+                flex-direction:column;
+                text-align:center;
+            }
+
+            .header-info h1{
+                font-size:26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <div class="header-info">
+                <h1>Usuários Cadastrados</h1>
+
+                <p>
+                    Gerencie todos os usuários do sistema
+                </p>
+            </div>
+
+            <a class="btn-novo"
+               th:href="@{/usuarios/ui/adicionar}">
+                + Novo Usuário
+            </a>
+
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Email</th>
+                    <th>CPF</th>
+                    <th>Ações</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="usuario : ${usuarios}">
+
+                    <td th:text="${usuario.id}"></td>
+
+                    <td th:text="${usuario.nome}"></td>
+
+                    <td th:text="${usuario.idade}"></td>
+
+                    <td th:text="${usuario.email}"></td>
+
+                    <td th:text="${usuario.cpf}"></td>
+
+                    <td>
+
+                        <div class="acoes">
+
+                            <a th:href="@{/usuarios/ui/listar/{id}(id=${usuario.id})}"
+                               class="btn btn-info">
+                                Detalhes
+                            </a>
+
+                            <a th:href="@{/usuarios/ui/alterar/{id}(id=${usuario.id})}"
+                               class="btn btn-edit">
+                                Alterar
+                            </a>
+
+                            <a th:href="@{/usuarios/ui/deletar/{id}(id=${usuario.id})}"
+                               class="btn btn-delete">
+                                Deletar
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(usuarios)}">
+                    <td colspan="6" class="sem-usuarios">
+                        Nenhum usuário cadastrado no sistema.
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Usuário</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background:
+                    linear-gradient(135deg, #0f172a, #1e293b);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:40px;
+        }
+
+        .container{
+            width:100%;
+            max-width:900px;
+        }
+
+        .card{
+            background:white;
+            border-radius:24px;
+            overflow:hidden;
+            box-shadow:0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .header{
+            background:
+                    linear-gradient(135deg,#2563eb,#1d4ed8);
+            padding:50px 40px;
+            color:white;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .header::before{
+            content:'';
+            position:absolute;
+            width:300px;
+            height:300px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.06);
+            top:-120px;
+            right:-80px;
+        }
+
+        .header::after{
+            content:'';
+            position:absolute;
+            width:180px;
+            height:180px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.05);
+            bottom:-70px;
+            left:-50px;
+        }
+
+        .usuario-info{
+            position:relative;
+            z-index:1;
+        }
+
+        .status{
+            display:inline-block;
+            background:rgba(255,255,255,0.15);
+            padding:8px 16px;
+            border-radius:30px;
+            font-size:14px;
+            margin-bottom:20px;
+            backdrop-filter:blur(4px);
+        }
+
+        .usuario-info h1{
+            font-size:42px;
+            margin-bottom:12px;
+            font-weight:bold;
+        }
+
+        .usuario-info p{
+            font-size:18px;
+            opacity:0.9;
+        }
+
+        .content{
+            padding:40px;
+        }
+
+        .titulo{
+            margin-bottom:30px;
+            color:#1e293b;
+            font-size:28px;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+            gap:25px;
+        }
+
+        .info-box{
+            background:#f8fafc;
+            border-radius:18px;
+            padding:25px;
+            transition:0.3s;
+            border:1px solid #e2e8f0;
+        }
+
+        .info-box:hover{
+            transform:translateY(-5px);
+            box-shadow:0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .info-label{
+            font-size:14px;
+            color:#64748b;
+            margin-bottom:10px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+        }
+
+        .info-value{
+            font-size:24px;
+            color:#0f172a;
+            font-weight:bold;
+            word-break:break-word;
+        }
+
+        .acoes{
+            margin-top:40px;
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+        }
+
+        .btn{
+            flex:1;
+            min-width:180px;
+            text-align:center;
+            padding:16px;
+            border-radius:14px;
+            text-decoration:none;
+            font-size:16px;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn-voltar{
+            background:#334155;
+            color:white;
+        }
+
+        .btn-voltar:hover{
+            background:#1e293b;
+        }
+
+        .btn-editar{
+            background:#2563eb;
+            color:white;
+        }
+
+        .btn-editar:hover{
+            background:#1d4ed8;
+        }
+
+        .btn-excluir{
+            background:#dc2626;
+            color:white;
+        }
+
+        .btn-excluir:hover{
+            background:#b91c1c;
+        }
+
+        @media(max-width:700px){
+
+            .usuario-info h1{
+                font-size:30px;
+            }
+
+            .content{
+                padding:25px;
+            }
+
+            .acoes{
+                flex-direction:column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="header">
+
+            <div class="usuario-info">
+
+                <div class="status">
+                    Usuário Ativo
+                </div>
+
+                <h1 th:text="${usuario.nome}"></h1>
+
+                <p>
+                    Perfil completo do usuário cadastrado no sistema
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="content">
+
+            <h2 class="titulo">
+                Informações do Usuário
+            </h2>
+
+            <div class="grid">
+
+                <div class="info-box">
+                    <div class="info-label">
+                        ID
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.id}">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        Idade
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.idade}">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        Email
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.email}">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        CPF
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.cpf}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="acoes">
+
+                <a th:href="@{/usuarios/ui/listar}"
+                   class="btn btn-voltar">
+                    ← Voltar
+                </a>
+
+                <a th:href="@{/usuarios/ui/editar/{id}(id=${usuario.id})}"
+                   class="btn btn-editar">
+                    Editar Usuário
+                </a>
+
+                <a th:href="@{/usuarios/ui/deletar/{id}(id=${usuario.id})}"
+                   class="btn btn-excluir">
+                    Excluir Usuário
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

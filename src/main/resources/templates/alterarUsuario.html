@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Usuário</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .card-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .card-header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 35px;
+        }
+
+        .info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .info-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 22px;
+            color: #222;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-voltar {
+            background: linear-gradient(135deg, #607D8B, #455A64);
+            color: white;
+        }
+
+        .btn-voltar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(96, 125, 139, 0.4);
+        }
+
+        .btn-editar {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+        }
+
+        .btn-editar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        .btn-excluir {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .btn-excluir:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
+        }
+
+        @media(max-width: 700px){
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .card-header h1 {
+                font-size: 26px;
+            }
+
+            .info-value {
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="card-header">
+            <h1 th:text="${usuario.nome}"></h1>
+
+            <p>
+                Informações completas do usuário
+            </p>
+        </div>
+
+        <div class="card-body">
+
+            <div class="info-container">
+
+                <div class="info-box">
+                    <div class="info-label">
+                        ID DO USUÁRIO
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.id}">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        IDADE
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.idade}">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        EMAIL
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.email}">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">
+                        CPF
+                    </div>
+
+                    <div class="info-value"
+                         th:text="${usuario.cpf}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="button-group">
+
+                <a th:href="@{/usuarios/ui/listar}"
+                   class="btn btn-voltar">
+                    ← Voltar
+                </a>
+
+                <a th:href="@{/usuarios/ui/editar/{id}(id=${usuario.id})}"
+                   class="btn btn-editar">
+                    Editar
+                </a>
+
+                <a th:href="@{/usuarios/ui/deletar/{id}(id=${usuario.id})}"
+                   class="btn btn-excluir">
+                    Excluir
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
