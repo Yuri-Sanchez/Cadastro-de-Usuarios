@@ -32,4 +32,7 @@ public class UsuariosModel {
     @NotNull
     @Column(unique = true)
     private String cpf;
+
+    @NotNull
+    private String senha;
 }
